@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
     bzero(&address, sizeof(address));
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
-    inet_pton(AF_INET,argv[1],&address.sin_addr);
+    inet_pton(AF_INET,"127.0.0.1",&address.sin_addr);
 
 
     if (connect(socketfd,(struct sockaddr*)&address, sizeof(address)) == -1){
