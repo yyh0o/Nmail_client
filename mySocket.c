@@ -2,11 +2,11 @@
 // Created by yyh on 18-7-30.
 //
 #include "mySocket.h"
+#include "client_fun.h"
 
-typedef struct {
-    char type; //消息类型
-    int len;  //数据长度
-} myMsgHead;//数据头
+
+
+
 
 
 /***********************************************************************
@@ -15,7 +15,7 @@ typedef struct {
  * @param IP 连接地址IP,若是服务端则传NULL
  * @return 返回一个struct sockaddr结构体
  */
-struct sockaddr new_addr(unsigned int port, char *IP) {
+struct sockaddr new_addr(unsigned short port, char *IP) {
     struct sockaddr_in addr;
     bzero(&addr, sizeof(addr));
     addr.sin_family = AF_INET;
@@ -68,6 +68,15 @@ int new_server_sock(unsigned short port) {
     return sockfd;
 }
 
+
+/********************************************************************
+ *
+ * @param sockfd 已建立连接的套接字
+ * @param buf 发送数据缓冲区
+ * @param len 发送数据长度
+ * @param type 发送数据类型
+ * @return 返回接收数据长度
+ */
 int mySendMsg(int sockfd, char *buf, int len, char type) {
     myMsgHead msgHead;
     msgHead.type = type;
@@ -77,7 +86,14 @@ int mySendMsg(int sockfd, char *buf, int len, char type) {
     return send(sockfd, buf, len, 0);
 }
 
-char myRecveMsg(int sockdf, char *buf) {
+/***********************************************************
+ *
+ * @param sockdf 已建立连接的套接字
+ * @param buf 接收数据的缓冲区
+ * @param type 用于储存接受文件的数据类型
+ * @return 返回接收文件的大小
+ */
+int  myRecvMsg(int sockdf, char *buf, char* type) {
     myMsgHead head;
     char* buffer = (char*)malloc(sizeof(myMsgHead)+1);
 
@@ -87,5 +103,6 @@ char myRecveMsg(int sockdf, char *buf) {
     free(buffer);
     buffer = NULL;
 
-    return head.type;
+    *type = head.type;
+    return head.len;
 }

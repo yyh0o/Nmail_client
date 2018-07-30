@@ -14,9 +14,13 @@
 #include <arpa/inet.h>
 #include <pthread.h>
 
-struct sockaddr new_addr(unsigned int port, char* IP);
+#define MY_MSG '1'  //标记普通信息
+#define MY_MSG_EXIT 'x' //标记退出信息
+
+
+struct sockaddr new_addr(unsigned short port, char* IP);
 int new_server_sock(unsigned short port);
 int mySendMsg(int sockfd, char *buf, int len, char type);
-char myRecveMsg(int sockdf, char *buf);
+int  myRecvMsg(int sockdf, char *buf, char* type);
 
 #endif //NMAIL_SERVER_MYSOCKET_H
