@@ -3,4 +3,4 @@ project(Nmail_client)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Nmail_client main.c ../Nmail_server/mySocket.c mySocket.h client.c client.h)
+add_executable(Nmail_client main.c mySocket.c mySocket.h client.c client.h)
