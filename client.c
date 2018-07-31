@@ -12,13 +12,15 @@ int clientRun(){
     char rcevBuff[BUFFER_SIZE];
     bzero(sendBuff,BUFFER_SIZE);
     bzero(rcevBuff,BUFFER_SIZE);
+
+//    myRecvFile(sockfd, "../", sizeof("../"));
     
     while (1) {
         scanf("%s", sendBuff);//输入发送数据
         fflush(stdin);//清除输入缓存
 
         if (strcmp(sendBuff, "exit") == 0) {
-            mySendMsg(sockfd, "0", 0, 'x');
+            mySendMsg(sockfd, "exit", sizeof("exit"), 'x');
             break;
         }
         if (mySendMsg(sockfd, sendBuff, sizeof(sendBuff), '1') == -1) {
