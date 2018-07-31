@@ -13,4 +13,5 @@
 
 int main(int argc, char *argv[]) {
     clientRun();
+    return 0;
 }

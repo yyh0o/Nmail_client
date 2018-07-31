@@ -19,8 +19,20 @@
 
 #define SERV_IP "127.0.0.1"
 #define SERV_PORT 23333
-#define TMP_BUFFER_SIZE 100
+#define FLAF_SIZE 100
+#define STOP_LOOP -1
+#define RECV_MAIL 1
+#define SEND_MAIL 2
+#define CHECK_MAIL 3
+#define DEL_MAIL 4
+#define START_MAIL 5
+#define MODIFY_CONTACT 6
+#define MODIFY_BLACK_LIST 7
+#define LOGIN 8
 
 int clientRun();
+int sendFlag(int socket, char* input, char* id, char* pass);
+int signIn(int sock, char* id, char* pass);
+int signUp(int sock, char* id, char* pass);
 
 #endif //NMAIL_CLIENT_CLIENT_H
