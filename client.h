@@ -29,10 +29,13 @@
 #define MODIFY_CONTACT 6
 #define MODIFY_BLACK_LIST 7
 #define LOGIN 8
+#define SINGUP 9
+#define LOGOUT 10
 
 int clientRun();
 int sendFlag(int socket, char* input, char* id, char* pass);
 int signIn(int sock, char* id, char* pass);
 int signUp(int sock, char* id, char* pass);
+int clientLogOut(int sock, char* id);
 
 #endif //NMAIL_CLIENT_CLIENT_H

@@ -66,6 +66,11 @@ int clientRun(){
                     printf("pass:\n");
                     scanf("%s", pass);
                     signIn(sockfd, id, pass);
+                case SINGUP:
+                    break;
+                case LOGOUT:
+                    clientLogOut(sockfd, id);
+                    break;
                 default:
                     break;
             }
@@ -109,4 +114,19 @@ int signUp(int sock, char* id, char* pass) {
     myRecvMsg(sock, &flag, &type);
     printf("%d\n", flag);
     return flag;
+}
+
+int clientLogOut(int sock, char* id){
+    if (strcmp(id, "") == 0){
+        printf("no login\n");
+        return -1;
+    }
+    char buf[FLAF_SIZE] = {0};
+    strcpy(buf, id);
+    char type;
+    mySendMsg(sock, buf, sizeof(buf), MY_MSG);
+    bzero(buf, sizeof(buf));
+    myRecvMsg(sock, buf, &type);
+    printf("logout");
+    return 0;
 }
