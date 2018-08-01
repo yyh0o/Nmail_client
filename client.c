@@ -21,86 +21,58 @@ int clientRun(){
 
     clientSignIn(sockfd, "123", "123");
 
-//    while (1) {
-//        int flag = 0;
-//        scanf("%d", &flag);//输入发送数据
-//        if ((flag = sendFlag(sockfd, flag, id, pass)) == -1024)
-//            break;
-//        else{
-//            if (flag < 0){
-//                switch (flag){
-//                    case -1:
-//                        break;
-//                    case -2:
-//                        break;
-//                    case -3:
-//                        break;
-//                }
-//                continue;
-//            }
-//            switch (flag) {
-//                case RECV_MAIL:
-//                    ;
-//                    break;
-//                case CHECK_MAIL:
-//                    ;
-//                    break;
-//                case SEND_MAIL:
-//                    ;
-//                    break;
-//                case DEL_MAIL:
-//                    ;
-//                    break;
-//                case START_MAIL:
-//                    ;
-//                    break;
-//                case MODIFY_CONTACT:
-//                    ;
-//                    break;
-//                case MODIFY_BLACK_LIST:
-//                    ;
-//                    break;
-//                case STOP_LOOP:
-//                    break;
-//                case LOGIN:
-//                    printf("id:\n");
-//                    scanf("%s", id);
-//                    printf("pass:\n");
-//                    scanf("%s", pass);
-//                    tmp = clientSignIn(sockfd, id, pass);
-//                    switch (tmp){
-//                        case -1:
-//                        case -2:
-//                        case -3:
-//                            bzero(id, sizeof(id));
-//                            bzero(pass, sizeof(pass));
-//                            break;
-//                        case 0:
-//                        case -4:
-//                            break;
-//                        default:
-//                            break;
-//                    }
-//                    printf("%d\n", tmp);
-//
-//                    break;
-//                case SINGUP:
-//                    bzero(id, sizeof(id));
-//                    bzero(pass, sizeof(pass));
-//                    printf("id:\n");
-//                    scanf("%s", id);
-//                    printf("pass:\n");
-//                    scanf("%s", pass);
-//                    clientSignUp(sockfd, id, pass);
-//                    break;
-//                case LOGOUT:
-//                    clientLogOut(sockfd, id);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
+    while (1) {
+        int flag = 0;
+        scanf("%d", &flag);//输入发送数据
+        if (flag == -1024)
+            break;
+            switch (flag) {
+                case RECV_MAIL:
+                    ;
+                    break;
+                case CHECK_MAIL:
+                    ;
+                    break;
+                case SEND_MAIL:
+                    ;
+                    break;
+                case DEL_MAIL:
+                    ;
+                    break;
+                case START_MAIL:
+                    ;
+                    break;
+                case MODIFY_CONTACT:
+                    ;
+                    break;
+                case MODIFY_BLACK_LIST:
+                    ;
+                    break;
+                case STOP_LOOP:
+                    break;
+                case LOGIN:
+                    printf("id:\n");
+                    scanf("%s", id);
+                    printf("pass:\n");
+                    scanf("%s", pass);
+                    clientSignIn(sockfd, id, pass);
+                    break;
+                case SINGUP:
+                    bzero(id, sizeof(id));
+                    bzero(pass, sizeof(pass));
+                    printf("id:\n");
+                    scanf("%s", id);
+                    printf("pass:\n");
+                    scanf("%s", pass);
+                    clientSignUp(sockfd, id, pass);
+                    break;
+                case LOGOUT:
+                    clientLogOut(sockfd, id);
+                    break;
+                default:
+                    break;
+            }
+        }
     close(sockfd);
     return 0;
 }
@@ -130,18 +102,17 @@ int clientSignIn(int sock, char* id, char* pass) {
     myRecvMsg(sock, &flag, &type);
 
     /*****测试****/
-    printf("%d\n", flag);
+//    printf("%d\n", flag);
 
     return flag;
 }
 
 int clientSignUp(int sock, char* id, char* pass) {
-
-
+    int flag = SINGUP;
+    char type;
+    sendFlag(sock, flag, id, pass);
     mySendMsg(sock, id, sizeof(id), MY_MSG);
     mySendMsg(sock, pass, sizeof(pass), MY_MSG);
-    int flag = 0;
-    char type;
     myRecvMsg(sock, &flag, &type);
     printf("%d\n", flag);
     return flag;
