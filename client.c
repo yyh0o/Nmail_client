@@ -119,16 +119,13 @@ int clientSignUp(int sock, char* id, char* pass) {
 }
 
 int clientLogOut(int sock, char* id){
-    if (strcmp(id, "") == 0){
-        printf("no login\n");
-        return -1;
-    }
-    char buf[FLAF_SIZE] = {0};
-    strcpy(buf, id);
+    int flag;
+    flag = LOGOUT;
+    char buf[BUFFER_SIZE] = {0};
     char type;
+    strcat(buf, id);
+    sendFlag(sock, flag, id, "");
     mySendMsg(sock, buf, sizeof(buf), MY_MSG);
-    bzero(buf, sizeof(buf));
     myRecvMsg(sock, buf, &type);
-    printf("logout");
-    return 0;
+    return flag;
 }
