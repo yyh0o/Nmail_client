@@ -121,7 +121,7 @@ int clientSignUp(int sock, char* id, char* pass) {
 int clientLogOut(int sock, char* id){
     int flag;
     flag = LOGOUT;
-    char buf[BUFFER_SIZE] = {0};
+    char buf[FLAF_SIZE] = {0};
     char type;
     strcat(buf, id);
     sendFlag(sock, flag, id, "");
