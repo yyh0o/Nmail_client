@@ -11,6 +11,7 @@ int clientRun(){
     char sendBuff[FLAF_SIZE] = {0};
     char id[FLAF_SIZE] = {0};
     char pass[FLAF_SIZE] = {0};
+    int tmp = 0;
 //    while(1){
 //        char *id;
 //        char *pass;
@@ -65,8 +66,31 @@ int clientRun(){
                     scanf("%s", id);
                     printf("pass:\n");
                     scanf("%s", pass);
-                    signIn(sockfd, id, pass);
+                    tmp = clientSignIn(sockfd, id, pass);
+                    switch (tmp){
+                        case -1:
+                        case -2:
+                        case -3:
+                            bzero(id, sizeof(id));
+                            bzero(pass, sizeof(pass));
+                            break;
+                        case 0:
+                        case -4:
+                            break;
+                        default:
+                            break;
+                    }
+                    printf("%d\n", tmp);
+
+                    break;
                 case SINGUP:
+                    bzero(id, sizeof(id));
+                    bzero(pass, sizeof(pass));
+                    printf("id:\n");
+                    scanf("%s", id);
+                    printf("pass:\n");
+                    scanf("%s", pass);
+                    clientSignUp(sockfd, id, pass);
                     break;
                 case LOGOUT:
                     clientLogOut(sockfd, id);
@@ -83,14 +107,14 @@ int clientRun(){
 int sendFlag(int socket, char* input, char* id, char* pass){
     int flag = 0;
     char type;
+    mySendMsg(socket, input, BUFFER_SIZE, MY_MSG);
     mySendMsg(socket, id, FLAF_SIZE, MY_MSG);
     mySendMsg(socket, pass, FLAF_SIZE, MY_MSG);
-    mySendMsg(socket, input, BUFFER_SIZE, MY_MSG);
     myRecvMsg(socket, &flag, &type);
     return flag;
 }
 
-int signIn(int sock, char* id, char* pass) {
+int clientSignIn(int sock, char* id, char* pass) {
 
     mySendMsg(sock, id, sizeof(id), MY_MSG);
     mySendMsg(sock, pass, sizeof(pass), MY_MSG);
@@ -104,7 +128,7 @@ int signIn(int sock, char* id, char* pass) {
     return flag;
 }
 
-int signUp(int sock, char* id, char* pass) {
+int clientSignUp(int sock, char* id, char* pass) {
 
 
     mySendMsg(sock, id, sizeof(id), MY_MSG);
