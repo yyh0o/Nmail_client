@@ -33,8 +33,8 @@
 #define LOGOUT 10
 
 int clientRun();
-int sendFlag(int socket, char* input, char* id, char* pass);
-clientSignIn(int sock, char* id, char* pass);
+int sendFlag(int socket, int flag, char* id, char* pass);
+int clientSignIn(int sock, char* id, char* pass);
 int clientSignUp(int sock, char* id, char* pass);
 int clientLogOut(int sock, char* id);
 
