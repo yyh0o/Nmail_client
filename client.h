@@ -19,7 +19,7 @@
 
 
 #define SERV_IP "127.0.0.1"
-#define SERV_PORT 23333
+#define SERV_PORT 2333
 #define FLAF_SIZE 100
 #define STOP_LOOP -1
 #define RECV_MAIL 1

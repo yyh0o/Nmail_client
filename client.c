@@ -31,7 +31,7 @@ int clientRun(){
                     sendMail(sockfd, id, pass);
                     break;
                 case DEL_MAIL:
-                    delMail(sockfd, id, pass);
+//                    delMail(sockfd, id, pass);
                     break;
                 case START_MAIL:
                     ;
@@ -184,7 +184,7 @@ void displayMainMenu(){
     printf("|              1: 接收邮件                      |\n");
     printf("|              2: 发送邮件                      |\n");
     printf("|              3: 查看邮件                      |\n");
-    printf("|              4: 删除邮件                      |\n");
+//    printf("|              4: 删除邮件                      |\n");
     printf("|              5: 收藏邮件                      |\n");
     printf("|              6: 编辑联系人                    |\n");
     printf("|              7: 编辑黑名单                    |\n");
