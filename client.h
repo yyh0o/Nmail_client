@@ -47,9 +47,13 @@ int clientSignUp(int sock, char* id, char* pass);
 int clientLogOut(int sock, char* id);
 void displayMainMenu();
 int clientSendMail(int sock, char* rid, char* title, char* content, char* id, char* pass);
+void checkMail(int sock, char* id, char* pass);
+int clientCheckMail(int sock, char* id, char* pass, char* title);
 void sendMail(int sock, char* myid, char* pass);
 int editContect(int sock, char* id, char* pass);
 int printMailingLists(void);
 int clientRecvMail(int sock, char* id, char* pass);
+int clientDelMail(int sock, char* id, char* pass, char* title);
+void delMail(int sock, char* id, char* pass);
 
 #endif //NMAIL_CLIENT_CLIENT_H

@@ -25,13 +25,13 @@ int clientRun(){
                     clientRecvMail(sockfd, id, pass);
                     break;
                 case CHECK_MAIL:
-                    ;
+                    checkMail(sockfd, id, pass);
                     break;
                 case SEND_MAIL:
                     sendMail(sockfd, id, pass);
                     break;
                 case DEL_MAIL:
-                    ;
+                    delMail(sockfd, id, pass);
                     break;
                 case START_MAIL:
                     ;
@@ -82,6 +82,8 @@ int clientRun(){
                             break;
                         case -3:
                             printf("该用户已存在\n");
+                            bzero(id, sizeof(id));
+                            bzero(pass, sizeof(pass));
                             break;
                         default:
                             printf("未知错误\n");
@@ -219,6 +221,67 @@ void sendMail(int sock, char* myid, char* pass){
     clientSendMail(sock, id, title, content, myid, pass);
 
 }
+
+void checkMail(int sock, char* id, char* pass) {
+    printMailingLists();
+    char title[FLAF_SIZE] = {0};
+    int flag = 0;
+    printf("输入邮件主题:\n");
+    scanf("%s", title);
+    flag = clientCheckMail(sock, id, pass, title);
+    if (flag != CHECK_MAIL){
+        printf("打开失败\n");
+    }
+
+
+}
+
+int clientCheckMail(int sock, char* id, char* pass, char* title) {
+    int flag = CHECK_MAIL;
+    char type;
+    char fileName[FILE_NAME_MAX_SIZE] = {0};
+    flag =  sendFlag(sock, flag, id, pass);
+    mySendMsg(sock, title, strlen(title)+1, MY_MSG);
+    mySendMsg(sock, id, strlen(id)+1, MY_MSG);
+    myRecvMsg(sock, &flag, &type);
+    if (flag == CHECK_MAIL){
+        myRecvFile(sock, "client/mainBox/", sizeof("client/mainBox/"), fileName);
+        separate(title);
+        return flag;
+    }
+    else {
+        return flag;
+    }
+}
+
+void delMail(int sock, char* id, char* pass) {
+    char title[FLAF_SIZE] = {0};
+    printMailingLists();
+    printf("输入要删除的邮件主题:\n");
+    scanf("%s", title);
+    clientDelMail(sock, id, pass, title);
+
+}
+
+int clientDelMail(int sock, char* id, char* pass, char* title){
+    char fileName[FILE_NAME_MAX_SIZE] = {0};
+    int flag = DEL_MAIL;
+    char type;
+    sendFlag(sock, flag, id, pass);
+    mySendMsg(sock, title, strlen(title) + 1, MY_MSG);
+    mySendMsg(sock, id, strlen(id) + 1, MY_MSG);
+    myRecvMsg(sock, &flag, &type);
+    if (flag == DEL_MAIL){
+        myRecvFile(sock, "client/mailBox/", sizeof("client/mailBox/"), fileName);
+        bzero(fileName, sizeof(fileName));
+        myRecvFile(sock, "client/mailBox/", sizeof("client/mailBox/"), fileName);
+    }
+    else {
+        flag = -1;
+    }
+    return flag;
+}
+
 
 /*********************************************
 客户端函数第一次运行时的初始化函数，负责建立用户邮箱
@@ -367,16 +430,16 @@ int printMailingLists(void) {
     }
     fread(&number, sizeof(int), 1, fp1);
     fclose(fp1);
-    struct MAILHEAD head[100];
+    MAILHEAD head[100];
     FILE *fp;
     fp = fopen("client/mailBox/list.txt", "r");
-    fread(head, sizeof(struct MAILHEAD), number, fp);
+    fread(head, sizeof(MAILHEAD), number, fp);
     fclose(fp);
     for (int i = 0; i < number; i++) {
+        printf("Title: %s\n", head[i].title);
         printf("TargetID: %s\n", head[i].targetID);
         printf("OriginID: %s\n", head[i].originID);
         printf("Data: %s\n", head[i].data);
-        printf("Title: %s\n", head[i].title);
     }
     return 0;
 }

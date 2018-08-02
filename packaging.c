@@ -26,8 +26,8 @@ int packaging(char* targetID,char* title,char* content,char* orid){
 //    struct configurationFile temp;
 //    fread(&temp, sizeof(temp), 1, fp);
 //    fclose(fp);
-    struct MAILHEAD head;
-    struct MAILBODY body;
+     MAILHEAD head;
+   MAILBODY body;
     char title1[50];
     strcpy(head.originID, orid);
     strcpy(head.targetID, targetID);
@@ -63,8 +63,8 @@ int separate(char* title){
     strcpy(title1,"client/TemporaryStorage/");
     strcat(title1,title);
     strcat(title1,".txt");
-    struct MAILHEAD head;
-    struct MAILBODY body;
+    MAILHEAD head;
+    MAILBODY body;
     FILE* fp1;
     fp1 = fopen(title1, "r");
     if(fp1 == NULL){
