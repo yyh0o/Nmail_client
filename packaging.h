@@ -8,6 +8,8 @@
 
 #ifndef packaging_h
 #define packaging_h
+
+#include <string.h>
 struct MAILHEAD{
     char targetID[25];
     char originID[25];
@@ -22,6 +24,6 @@ struct MAILBODY{
     char appenfixName[50];
 };
 int separate(char* title);//文件拆封
-int packaging(char* targetID,char* title,char* content);//文件封装
+int packaging(char* targetID,char* title,char* content,char* orid);//文件封装
 
 #endif /* packaging_h */

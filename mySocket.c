@@ -129,7 +129,7 @@ int mySendFile(int sockdf, const char* fileName,int nameLen, FILE* fp){
     mySendMsg(sockdf, fileName, nameLen, MY_MSG_FILE);      //发送文件名
     char buffer[BUFFER_SIZE];                               //新建缓冲区
     bzero(buffer, sizeof(buffer));                          //初始化缓冲区
-    myRecvMsg(sockdf, buffer, &type);                 //接受返回数据
+    myRecvMsg(sockdf, buffer, &type);                       //接受返回数据
     if (strcmp(buffer,"OK") == 0){                          //判断是否可发文件
         bzero(buffer, sizeof(buffer));
         int fileBlockLen = 0;                               //记录文件块长度
@@ -156,7 +156,7 @@ int mySendFile(int sockdf, const char* fileName,int nameLen, FILE* fp){
  * @param pathlen 文件路径长度
  * @return 文件成功接收返回0,接收失败返回-1
  */
-int myRecvFile(int sockdf, const char* path, int pathlen) {
+int myRecvFile(int sockdf, const char* path, int pathlen, char* mfileName) {
     char fileName[FILE_NAME_MAX_SIZE];                      //记录文件名
     char type;                                              //记录数据类型
     bzero(fileName, sizeof(fileName));                      //初始化文件名数组
@@ -165,6 +165,10 @@ int myRecvFile(int sockdf, const char* path, int pathlen) {
         perror("数据类型不匹配");
         return -1;
     }
+
+    bzero(mfileName, strlen(fileName) + 1);
+    strcpy(mfileName, fileName);
+
     char* filePath = (char*)malloc(pathlen+fileNameLen+1);  //生成文件储存路径
     bzero(filePath,pathlen+fileNameLen+1);
     strcpy(filePath,path);

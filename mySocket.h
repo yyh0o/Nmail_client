@@ -35,6 +35,6 @@ int new_connected_sock(const char* ip, unsigned short port);
 int mySendMsg(int sockfd, char *buf, int len, char type);
 int  myRecvMsg(int sockdf, char *buf, char* type);
 int mySendFile(int sockdf, const char* fileName,int nameLen, FILE* fp);
-int myRecvFile(int sockdf, const char* path, int pathlen);
+int myRecvFile(int sockdf, const char* path, int pathlen, char* mfileName);
 
 #endif //NMAIL_SERVER_MYSOCKET_H

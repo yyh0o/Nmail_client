@@ -17,7 +17,7 @@
  返回值为-1 文件打开失败
  返回值为0 运行完成
  */
-int packaging(char* targetID,char* title,char* content){
+int packaging(char* targetID,char* title,char* content,char* orid){
 //    FILE* fp;
 //    fp = fopen("/Users/kevin/Documents/GitHub/NeuMail/configuration/configuration.txt", "r");
 //    if(fp == NULL){
@@ -29,7 +29,7 @@ int packaging(char* targetID,char* title,char* content){
     struct MAILHEAD head;
     struct MAILBODY body;
     char title1[50];
-//    strcpy(head.originID, temp.userId);
+    strcpy(head.originID, orid);
     strcpy(head.targetID, targetID);
     strcpy(body.content, content);
     time_t timep;
@@ -37,7 +37,7 @@ int packaging(char* targetID,char* title,char* content){
     strcpy(head.data, asctime(gmtime(&timep)));
     strcpy(head.title, title);
     head.state = 0;
-    strcpy(title1,"client/TemporaStorage/");
+    strcpy(title1,"client/TemporaryStorage/");
     strcat(title1,title);
     strcat(title1,".txt");
     FILE* fp1;
@@ -60,7 +60,7 @@ int separate(char* title){
 //    configuration("111@111","1212.22.22.2","2222");
 //    packaging("123123","34343433","3423243423");
     char title1[50];
-    strcpy(title1,"client/TemporaStorage/");
+    strcpy(title1,"client/TemporaryStorage/");
     strcat(title1,title);
     strcat(title1,".txt");
     struct MAILHEAD head;
